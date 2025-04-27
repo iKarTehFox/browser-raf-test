@@ -1,7 +1,7 @@
 import { menu } from './utils/dom-elements';
 import { getSystemInfo } from './utils/system-info';
-import { runRAFTest, testResults } from './utils/tests';
-import { displayResults, exportData } from './utils/ui';
+import { runRAFTest } from './utils/tests';
+import { displayResults, exportChartDataCSV, exportData } from './utils/ui';
 import { initFileHandlers } from './utils/file-handler';
 import { Tooltip } from 'bootstrap';
 
@@ -38,6 +38,7 @@ export function init(): void {
     // Initialize listeners
     menu.startButton.addEventListener('click', startTest);
     menu.exportButton.addEventListener('click', exportData);
+    menu.exportCsvButton.addEventListener('click', exportChartDataCSV);
     
     // Initialize file upload handlers
     initFileHandlers();

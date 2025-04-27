@@ -249,3 +249,38 @@ export function exportData(): void {
     linkElement.setAttribute('download', exportFileDefaultName);
     linkElement.click();
 }
+
+export function exportChartDataCSV(): void {
+    // Check if we have test results
+    if (!testResults.frames || testResults.frames.length === 0) {
+        console.error('No data to export');
+        return;
+    }
+    
+    // Create CSV header
+    let csvContent = 'Frame Number,Timestamp (ms),Frame Duration (ms),FPS,Expected Frame Time (ms),Drift (ms)\n';
+    
+    // Add each frame's data
+    testResults.frames.forEach(frame => {
+        const row = [
+            frame.frameNumber,
+            frame.timestamp.toFixed(2),
+            frame.frameDuration.toFixed(2),
+            frame.fps.toFixed(2),
+            frame.expected.toFixed(2),
+            frame.drift.toFixed(2)
+        ].join(',');
+        
+        csvContent += row + '\n';
+    });
+    
+    // Create a download link
+    const encodedUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const exportFileDefaultName = `raf-perfchart-${currentTime}.csv`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', encodedUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}

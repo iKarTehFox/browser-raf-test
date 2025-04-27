@@ -1,31 +1,34 @@
+import { getElement } from './dom-selectors';
+
 export const menu = {
-    startButton: document.getElementById('startButton') as HTMLButtonElement,
-    uploadForm: document.getElementById('uploadForm') as HTMLDivElement,
-    progressContainer: document.getElementById('progress') as HTMLDivElement,
-    resultsContainer: document.getElementById('results') as HTMLDivElement,
-    spinner: document.getElementById('testSpinner') as HTMLDivElement,
-    browserInfo: document.getElementById('browserInfo') as HTMLDivElement,
-    osInfo: document.getElementById('osInfo') as HTMLDivElement,
-    userAgentInfo: document.getElementById('userAgentInfo') as HTMLDivElement,
-    exportButton: document.getElementById('exportButton') as HTMLButtonElement,
-    liveStats: document.getElementById('liveStats') as HTMLDivElement,
-    currentFps: document.getElementById('currentFps') as HTMLSpanElement,
-    avgFrameTime: document.getElementById('avgFrameTime') as HTMLSpanElement,
-    testHeader: document.getElementById('testHeader') as HTMLDivElement,
+    startButton: getElement<HTMLButtonElement>('startButton'),
+    uploadForm: getElement<HTMLDivElement>('uploadForm'),
+    progressContainer: getElement<HTMLDivElement>('progress'),
+    resultsContainer: getElement<HTMLDivElement>('results'),
+    spinner: getElement<HTMLDivElement>('testSpinner'),
+    browserInfo: getElement<HTMLDivElement>('browserInfo'),
+    osInfo: getElement<HTMLDivElement>('osInfo'),
+    userAgentInfo: getElement<HTMLDivElement>('userAgentInfo'),
+    exportButton: getElement<HTMLButtonElement>('exportButton'),
+    liveStats: getElement<HTMLDivElement>('liveStats'),
+    currentFps: getElement<HTMLSpanElement>('currentFps'),
+    avgFrameTime: getElement<HTMLSpanElement>('avgFrameTime'),
+    testHeader: getElement<HTMLDivElement>('testHeader'),
+    exportCsvButton: getElement<HTMLButtonElement>('exportCSVButton'),
 };
 
 export const progressBar = {
-    raf: document.getElementById('rafProgress') as HTMLDivElement
+    raf: getElement<HTMLDivElement>('rafProgress')
 };
 
 export const results = {
-    avgFps: document.getElementById('avgFps') as HTMLTableCellElement,
-    minFps: document.getElementById('minFps') as HTMLTableCellElement,
-    maxFps: document.getElementById('maxFps') as HTMLTableCellElement,
-    fpsStability: document.getElementById('fpsStability') as HTMLTableCellElement,
-    avgFrameTimeResult: document.getElementById('avgFrameTimeResult') as HTMLTableCellElement,
-    minFrameTime: document.getElementById('minFrameTime') as HTMLTableCellElement,
-    maxFrameTime: document.getElementById('maxFrameTime') as HTMLTableCellElement,
-    frameTimeStdDev: document.getElementById('frameTimeStdDev') as HTMLTableCellElement,
-    frameTimeChart: document.getElementById('frameTimeChart') as HTMLCanvasElement
+    avgFps: getElement<HTMLTableCellElement>('avgFps'),
+    minFps: getElement<HTMLTableCellElement>('minFps'),
+    maxFps: getElement<HTMLTableCellElement>('maxFps'),
+    fpsStability: getElement<HTMLTableCellElement>('fpsStability'),
+    avgFrameTimeResult: getElement<HTMLTableCellElement>('avgFrameTimeResult'),
+    minFrameTime: getElement<HTMLTableCellElement>('minFrameTime'),
+    maxFrameTime: getElement<HTMLTableCellElement>('maxFrameTime'),
+    frameTimeStdDev: getElement<HTMLTableCellElement>('frameTimeStdDev'),
+    frameTimeChart: getElement<HTMLCanvasElement>('frameTimeChart')
 };
