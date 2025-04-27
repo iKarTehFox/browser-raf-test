@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Browser RAF Test by iKarTehFox</title>
+        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    </head>
+    <body data-bs-theme="dark">
+        <div class="container py-4">
+            <h1 class="mb-4">Browser RAF Test</h1>
+            <p class="lead">This tool tests the accuracy and consistency of requestAnimationFrame in your browser, which is critical for smooth animations and games.</p>
+            <!-- Sys info card -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0" id="sysInfoHeader">System Information</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-3 fw-bold">Browser:</div>
+                        <div class="col-md-9" id="browserInfo">Begin test to populate...</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-3 fw-bold">Operating System:</div>
+                        <div class="col-md-9" id="osInfo">Begin test to populate...</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-3 fw-bold">User Agent:</div>
+                        <div class="col-md-9" id="userAgentInfo">Begin test to populate...</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button id="startButton" class="btn btn-primary mt-3" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Close other programs and don't hide tab!">Start RAF Test</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="uploadForm" class="mt-3">
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="fileInput" accept=".json">
+                                    <button class="btn btn-secondary" type="button" id="loadButton">Load Results</button>
+                                </div>
+                                <div class="form-text">Upload previously exported test results</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress card -->
+            <div id="progress" class="card mb-4 d-none">
+                <div class="card-header">
+                    <h2 class="h5 mb-0 d-inline-block">Test Progress</h2>
+                    <div class="spinner-border spinner-border-sm ms-2 d-none" id="testSpinner" role="status">
+                        <span class="visually-hidden">Testing in progress...</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="h6" id="testHeader">RAF Test (- frames)</h3>
+                    <div class="progress mb-4" style="height: 25px;">
+                        <div id="rafProgress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
+                    <div id="liveStats" class="d-none">
+                        <h3 class="h6 mt-3">Live Statistics</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body py-2">
+                                        <span class="fw-bold">Current FPS: </span>
+                                        <span id="currentFps">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body py-2">
+                                        <span class="fw-bold">Average Frame Time: </span>
+                                        <span id="avgFrameTime">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Results card -->
+            <div id="results" class="card mb-4 d-none">
+                <div class="card-header">
+                    <h2 class="h5 mb-0" id="testResultsHeader">Test Results</h2>
+                </div>
+                <div class="card-body">
+                    <p>The following results show how consistently your browser delivers animation frames.</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="h6 mb-0">Frame Rate Statistics</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Metric</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Average FPS</td>
+                                                <td id="avgFps">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Minimum FPS</td>
+                                                <td id="minFps">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Maximum FPS</td>
+                                                <td id="maxFps">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>FPS Stability</td>
+                                                <td id="fpsStability">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="h6 mb-0">Frame Time Statistics</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Metric</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Average Frame Time</td>
+                                                <td id="avgFrameTimeResult">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Minimum Frame Time</td>
+                                                <td id="minFrameTime">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Maximum Frame Time</td>
+                                                <td id="maxFrameTime">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Frame Time Std Dev</td>
+                                                <td id="frameTimeStdDev">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="h6 mb-0">Frame Time Distribution</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="frameTimeChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="exportContainer">
+                        <button id="exportButton" class="btn btn-success">Export Raw Data</button>
+                        <p class="mt-2 text-muted">Click the button above to download the complete test results as a JSON file.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Credit -->
+            <div class="card mt-4">
+                <div class="card-body text-center">
+                    <p class="text-muted mb-1">Created by <span class="fw-bold">iKarTehFox</span> - View on <a href="https://github.com/iKarTehFox/browser-raf-test" class="fw-bold">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
